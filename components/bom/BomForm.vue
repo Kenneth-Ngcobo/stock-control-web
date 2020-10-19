@@ -12,7 +12,7 @@
             </div>
             <div class="form-group">
             <label class="control-label col-sm-2" for>Customer:</label>
-            <input type="text" v-model="item.customer" required placeholder="Customer"/>
+            <input type="text" id="customer" readonly :placeholder="newJob.customer"/>
             </div>   
             <button v-on:click.prevent="$emit('createBOM')">Create BOM</button>
         </form>
@@ -31,6 +31,14 @@ export default {
                     customer:''
                 }
             }
+        },
+        newJob: {
+            type: Object,
+            default(){
+                return {
+                    customer:''
+                }
+            }
         }
     },
     created(){
@@ -41,3 +49,10 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+ #customer ::placeholder {
+    color: black;
+}
+
+</style>

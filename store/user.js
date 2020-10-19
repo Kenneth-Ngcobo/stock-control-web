@@ -5,11 +5,14 @@ export const state = () => ({
 export const mutations = {
     SET_NAME(state, name) {
         state.name = name || ''
+        
+
     }
 }
 
 export const getters = {
     isLoggedIn(state, getters, rootState) { return rootState.auth.loggedIn; },
+    //User(state, getters, rootState) {return rootState.auth.user},
     isAdmin(state, getters, rootState) { 
         let isAdmin = false;
 

@@ -3,7 +3,9 @@
     <div>
 
     <input type="text" placeholder="Search items" v-model="filter" />
-
+    <nuxt-link to='/components/additem'>
+    <button>Add Item</button>
+    </nuxt-link>
     <table class="table table-bordered table-hover grid">
       <thead>
         <tr>

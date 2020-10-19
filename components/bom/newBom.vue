@@ -3,7 +3,7 @@
 
     <div v-if="(!submitted && !finish)">
 
-        <bom-form :item="bomFormData" @createBOM="createBOM()"></bom-form>
+        <bom-form :newJob="newJob" :item="bomFormData" @createBOM="createBOM()"></bom-form>
 
     </div>
    
@@ -49,8 +49,8 @@
                 <tr
                 v-for="(i, index) in bom"
                 :key="index">
-                    <td><select v-model="type[index]">
-                        <option value="" disabled selected hidden>Select type</option>
+                    <td><select>  <!--v-model="type[index]">-->
+                        <option value="" disabled selected hidden>{{i.type}}</option>
                         <option value="C">C</option>
                         <option value="M">M</option>
                         </select></td>
@@ -100,10 +100,11 @@
                 </tr>
             </tbody>
         </table>
-        <nuxt-link to='/boms'>
-        <button>Add another bom</button>
-        </nuxt-link>
-        <button>Add BOMs to job</button>
+     
+        <button v-on:click="$emit('addAnother')">Add another bom</button> <!----LINK TO ADD NEW BOM ----->
+        
+      
+        <button v-on:click.prevent="$emit('addBOM')">Add BOMs to job</button> <!-------MUST GO TO AN ADD BOM to job section--------------->
     </div>
 
 </div> 
@@ -117,6 +118,17 @@ import BomForm from "@/components/bom/BomForm";
 export default {
     components:{
         BomForm
+    },
+    props:{
+        newJob: {
+            type: Object,
+            default(){
+                return {
+                    customer: '',
+                    
+                }
+            }
+        }
     },
     data() {
         return {
@@ -149,7 +161,8 @@ export default {
             newCustNumber: [],
             newDesignator: [],
             newQuantity: [],
-            count: []
+            count: [],
+            another: false
         }
     },
 
@@ -184,6 +197,7 @@ export default {
             
             formData.append('file', this.file);
             formData.append('bom_name', this.newBOM.bom_name);
+            formData.append('type', 'C')
 
             let fileresponse = await this.uploadBomFile(formData);
 
@@ -235,24 +249,43 @@ export default {
     postBOM: function() {
         //let pcbaIndex = this.fig_items.length - 1;
 
+        //typeof this.orderedBOM !== "undefined" &&
+        //this.orderedBOM.hasOwnProperty("bom_name")
+
         for (let i = 0; i<this.item.length; i++) {
             for(let j = 0; j<this.items.length; j++) {
+                if(typeof this.items[j] != "undefined" && this.items[j].hasOwnProperty("part_number")) {
                 if (this.item[i] == this.items[j].part_number) {
                     this.actual_items[i] = this.items[j]
                     //console.log(this.items[j].id)
+                }
+                }
+                else {
+                    this.actual_items[i] = {}
                 }
             }
         }
 
         
         for(let i = 0; i<this.actual_items.length; i++) {
+            if(typeof this.actual_items[i] != "undefined" && this.actual_items[i].hasOwnProperty("part_number")) {
             this.$axios.$post("/bom", {
                     comp_name: this.actual_items[i].part_number,
                     bom_name: this.newBOM.bom_name,
                     idbom_comp: this.pcbaID[i], //idbom_comp: this.pcbaID[pcbaIndex],
                     comp_id: this.actual_items[i].id,
-                    type: this.type[i]
+                    //type: this.type[i]
             }) 
+            }
+            else {
+               this.$axios.$post("/bom", {
+                    comp_name: null,
+                    bom_name: this.newBOM.bom_name,
+                    idbom_comp: this.pcbaID[i], //idbom_comp: this.pcbaID[pcbaIndex],
+                    comp_id: null,
+                    //type: this.type[i]
+            })  
+            }
         } 
 
         if(this.newFigItem.length > 0) {

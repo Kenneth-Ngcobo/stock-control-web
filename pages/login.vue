@@ -15,12 +15,15 @@
         <!--label for>Enter password</label-->
         <input :type="showPassword ? 'text' : 'password'" v-model="userInfo.password" placeholder="Enter password" />
       </div>
-      <input type="checkbox" @click="showPassword = !showPassword">
-      <span>Show Password</span>
-      <b-row>
+      <div>
+      <input type="checkbox" @click="showPassword = !showPassword"> Show Password
+      </div>
+      <br>
+       <b-button type="submit" variant="outline-primary" style="width:130px;" >Login</b-button>
+      <!--b-row>
         <b-col></b-col>
         <b-col><button type="submit">Login</button></b-col>
-      </b-row>
+      </b-row-->
        
       
     </form>
@@ -39,8 +42,8 @@ export default {
   data: function() {
     return {
       userInfo: {
-        username: "kenneth",
-        password: "ken123"
+        username: "",
+        password: ""
       },
       submitted: false,
       showPassword: false
@@ -65,7 +68,8 @@ export default {
               {
                 console.log('Login user data =',response.data.user);
                 await this.$auth.setUser(response.data.user);
-                this.$router.push("/jobs")
+                window.localStorage.currentUser = JSON.stringify(response.data.user)
+                this.$router.push("/home")
               }
             }
             
@@ -125,7 +129,7 @@ h3 {
 }
 
 .my-form button {
-  margin-left: 25%;
+  margin-left: 0%;
   
 }
 

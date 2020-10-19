@@ -1,87 +1,95 @@
 <template>
     <div>
-        <h5> {{item.part_number}} </h5>
-        <div style="display:flex">
-        <form class="form-horizontal" style="width:50%; margin:auto;">
+        <h5 style="margin-left: 27px;"> {{item.part_number}} </h5>
+        <div > <!----style="display:flex"---->
+        <div class="col-md-6 float-left"> 
+        <form class="form-horizontal" > <!---style="width:50%; margin:auto;"---->
             <div class="form-group">
-                <label class="control-label col-sm-2">Part Number:</label>
-                <input type="text" readonly :value="item.part_number">
+                <label class="control-label col-sm-3">Part Number:</label>
+                <input type="text" :class="{'read-only' : !edit }" v-model="item.part_number" :readonly="!edit" >
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-2">Description:</label>
-                <input type="text" readonly :value="item.description">
+                <label class="control-label col-sm-3">Description:</label>
+                <input type="text" :class="{'read-only' : !edit }" v-model="item.description" :readonly="!edit">
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-2">Sub Cat:</label>
-                <input type="text" readonly :value="item.sub_category">
+                <label class="control-label col-sm-3">Sub Cat:</label>
+                <input type="text" :class="{'read-only' : !edit }" v-model="item.sub_category" :readonly="!edit" >
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-2">Price:</label>
-                <input type="text" readonly :value="item.price">
+                <label class="control-label col-sm-3">Price:</label>
+                <input type="text" :class="{'read-only' : !edit }" v-model="item.price" :readonly="!edit">
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-2">Qty:</label>
-                <input type="text" readonly :value="item.qty">
+                <label class="control-label col-sm-3">Qty:</label>
+                <input type="text" :class="{'read-only' : !edit }" v-model="item.qty" :readonly="!edit">
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-2">Bin:</label>
-                <input type="text" readonly :value="item.bin_location">
+                <label class="control-label col-sm-3">Bin:</label>
+                <input type="text" :class="{'read-only' : !edit }" v-model="item.bin_location" :readonly="!edit">
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-2">Supplier:</label>
-                <input type="text" readonly :value="item.vendor">
+                <label class="control-label col-sm-3">Supplier:</label>
+                <input type="text" :class="{'read-only' : !edit }" v-model="item.vendor" :readonly="!edit">
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-2">Supplier Part No:</label>
-                <input type="text" readonly :value="item.vendor_item_number">
+                <label class="control-label col-sm-3">Supplier Part No:</label>
+                <input type="text" :class="{'read-only' : !edit }" v-model="item.vendor_item_number" :readonly="!edit">
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-2">Lead-time:</label>
-                <input type="text" readonly :value="item.lead_time">
+                <label class="control-label col-sm-3">Lead-time:</label>
+                <input type="text" :class="{'read-only' : !edit }" v-model="item.lead_time" :readonly="!edit">
             </div>
-            <button @click="edit = !edit">Edit</button>
+            <div v-if="!edit">
+            <button @click.prevent="edit = true">Edit</button>
+            </div>
+            <div v-else>
+            <button @click="updateItem">Update</button>
+            </div>
         </form>
+        </div>
 
-        <form class="form-horizontal" style="width:50%; margin:auto;">
+        <div class="col-md-6 float-right">
+        <form class="form-horizontal" > <!----style="width:50%; margin:auto;"---->
             <div class="form-group">
-                <label class="control-label col-sm-2">Mfg Name:</label>
-                <input type="text" readonly :value="item.mfg_name">
+                <label class="control-label col-sm-3">Mfg Name:</label>
+                <input type="text" :class="{'read-only' : !edit }" v-model="item.mfg_name" :readonly="!edit" >
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-2">Mfg Partnumber:</label>
-                <input type="text" readonly :value="item.mfg_partnumber">
+                <label class="control-label col-sm-3">Mfg Partnumber:</label>
+                <input type="text" :class="{'read-only' : !edit }" v-model="item.mfg_partnumber" :readonly="!edit">
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-2">Mounting type:</label>
-                <input type="text" readonly :value="item.mounting_type">
+                <label class="control-label col-sm-3">Mounting type:</label>
+                <input type="text" :class="{'read-only' : !edit }" v-model="item.mounting_type" :readonly="!edit">
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-2">Package:</label>
-                <input type="text" readonly :value="item.package">
+                <label class="control-label col-sm-3">Package:</label>
+                <input type="text" :class="{'read-only' : !edit }" v-model="item.package" :readonly="!edit">
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-2">Comment:</label>
-                <input type="text" readonly :value="item.comment">
+                <label class="control-label col-sm-3">Comment:</label>
+                <input type="text" :class="{'read-only' : !edit }" v-model="item.comment" :readonly="!edit">
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-2">Category:</label>
-                <input type="text" readonly :value="item.category">
+                <label class="control-label col-sm-3">Category:</label>
+                <input type="text" :class="{'read-only' : !edit }" v-model="item.category" :readonly="!edit">
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-2">Footprint Ref:</label>
-                <input type="text" readonly :value="item.footprint_ref">
+                <label class="control-label col-sm-3">Footprint Ref:</label>
+                <input type="text" :class="{'read-only' : !edit }" v-model="item.footprint_ref" :readonly="!edit">
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-2">Library Ref:</label>
-                <input type="text" readonly :value="item.library_ref">
+                <label class="control-label col-sm-3">Library Ref:</label>
+                <input type="text" :class="{'read-only' : !edit }" v-model="item.library_ref" :readonly="!edit" >
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-2">Date Modified:</label>
-                <input type="text" readonly :value="item.date_modified">
+                <label class="control-label col-sm-3">Date Modified:</label>
+                <input type="text" :class="{'read-only' : !edit }" v-model="item.date_modified" :readonly="!edit">
             </div>
             
         </form>
-
+         </div>
 
 
 
@@ -92,12 +100,41 @@
 <script>
 //import axios from "axios";
     export default {
+        middleware: ['auth'],
         data() {
             return {
-                item: [],
+                item: {},
                 id: this.$route.params.id,
-                edit: false
+                edit: false,
+                comp: {
+                    part_number: "",
+                    description: "",
+                    sub_category: "",
+                    price: "",
+                    qty: "",
+                    bin_location: "",
+                    vendor: "",
+                    vendor_item_number: "",
+                    lead_time: "",
+                    mfg_name: "",
+                    mfg_partnumber: "",
+                    mounting_type: "",
+                    package: "",
+                    comment: "",
+                    category: "",
+                    footprint_ref: "",
+                    library_ref: "",
+                    date_modified: "" 
+                }
     };
+  },
+
+  methods: {
+        updateItem () {
+            this.$axios.$post('/fig_items_update', this.item)
+            //console.log(this.item)
+            this.edit = false
+        }
   },
 
   created: async function() {
@@ -132,19 +169,21 @@ h5 {
 }
 .form-horizontal input[type=text] {
     width: 50%;
-    background-color: lightgrey;
+   
 }
 
 button {
   margin-left: 80%;
   margin-top: 20px;
-  width: 10%
+ 
 }
 
 button:hover {
   background-color: green;
 }
 
-
+.read-only {
+    background-color: rgb(231, 226, 226);
+}
 
 </style>

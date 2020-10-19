@@ -7,6 +7,7 @@
 <script>
     //import axios from "axios";
     export default {
+    middleware: ['auth'],
     data() {
         return {
             job: [],
@@ -18,18 +19,17 @@
     created: async function() {
         //Find THE SPECIFIC JOB THAT THE UNSER CLICKS, THIS GETS SENT DOWN TO CHILD ROUTES
         let job = await this.$axios.$get("/jobs/")
-        this.job = job.find(v => v.idjobs2 == this.$route.params.idjobs);
+        this.job = job.find(v => v.job_number == this.$route.params.idjobs);
     
       
         //this.job.req_del = this.job.req_del //.split('T')[0]
         
         //FIND THE BOMS ORDERED ON THIS SPECIFIC JOB
-        let ordered_boms = await this.$axios.$get(`/ordered_boms/${this.job.job_number}`)
-        this.ordered_boms = ordered_boms;
+        this.ordered_boms = await this.$axios.$get(`/ordered_boms/${this.job.job_number}`)
        
 
-        let items = await this.$axios.$get(`/fig_items`)
-                this.items = items  
+        this.items = await this.$axios.$get(`/fig_items`)
+         
                     
     
     }, 

@@ -36,7 +36,7 @@
 //import axios from "axios";
 
 export default {
-    
+    middleware: ['auth'],
     data() {
         return {
             bom: [],
@@ -76,8 +76,13 @@ export default {
                     this.actual_items[i] = this.items[j]
                     //console.log(this.items[j].id)
                 }
+                /*
+                else {
+                  this.actual_items[i] = this.components[i]
+                }*/
             } 
         } 
+    //debugger
     for(let i = 0; i<this.components.length; i++) {
       this.product[i] = this.components[i].qty*this.actual_items[i].price
       this.bom_price = (this.bom_price+this.product[i])

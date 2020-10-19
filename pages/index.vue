@@ -1,30 +1,21 @@
 <template>
-    <div>
+    <b-container fluid>
       <h5 class="title">
-        Figment Manufacturing Stock and Job System
+        Welcome to Figment Manufacturing Stock Sytem
       </h5>
 
-      <!--h5>loggedIn: {{$auth.loggedIn}}</h5>
-      <h5>user: {{$auth.user}}</h5>
-      <h5>isLoggedIn: {{isLoggedIn}}</h5-->
-      <div class="row">
-      <nuxt-link class="nav-link" to='/components'>
-        <button>Store</button>
-      </nuxt-link>
-      <nuxt-link class="nav-link" to='/jobs'>
-      <button>Jobs</Center></button>
-       </nuxt-link>
-       </div>
-       <div class="row">
-       <nuxt-link class="nav-link" to='/pos'>
-      <button>POs</button>
-       </nuxt-link>
-        <nuxt-link class="nav-link" to='/boms'>
-      <button>BOMs</button>
-       </nuxt-link>
-       </div>
-     
-    </div>
+      <b-row class="mt-5">
+        <b-col></b-col>
+        <b-col sm="10" md="6" lg="4" class="pb-2 text-center">
+          <b-button variant="outline-primary" size="lg" href="/register" style="width:150px;">Register</b-button>
+          <b-button variant="outline-primary" size="lg" href="/login" style="width:150px;" class="ml-2">Login</b-button>
+        </b-col>
+        <b-col></b-col>
+      </b-row>
+
+      
+
+    </b-container>
  
 </template>
 
@@ -33,7 +24,6 @@
 import {mapGetters} from 'vuex'
 
 export default {
-  middleware: ['auth'],
   computed: {
       ...mapGetters({
           isLoggedIn: 'user/isLoggedIn'
@@ -65,11 +55,5 @@ export default {
   margin-top: 50px;
 }
 
-button {
-  padding: 60px 60px;
-  margin-top: 50px;
-  margin-left:300px;
- 
-}
 
 </style>

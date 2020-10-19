@@ -1,86 +1,121 @@
 <template>
   <div class="addItem">
-    <h3 v-if="!submitted">Add Item</h3>
-    <div v-if="!submitted" style="display:flex">
-    <form  class="form-horizontal" style="width:50%; margin:auto;">
+    <h3 v-if="!submitted" style="margin-left: 30px;">Add Item</h3>
+    <div v-if="!submitted" > <!--style="display:flex"--->
+
+    <div class="col-md-6 float-left">
+    <form  class="form-horizontal" > <!---style="width:50%; margin:auto;"---->
       <div class="form-group">
-        <label class="control-label col-sm-3" for>Part number:</label>
+        <label class="control-label col-sm-4" for>Part number:</label>
         <input type="text" v-model="item.part_number" />
       </div>
       <div class="form-group">
-        <label class="control-label col-sm-3" for>Description:</label>
+        <label class="control-label col-sm-4" for>Description:</label>
         <input type="text" v-model="item.description" />
       </div>
       <div class="form-group">
-        <label class="control-label col-sm-3" for>Item category:</label>
-        <input type="text" v-model="item.category" />
+        <label class="control-label col-sm-4" for>Item category:</label>
+        <input list="category" v-model="item.category" />
       </div>
+      <datalist id="category">
+          <option v-for="option in item_options" :key="option.option_id">{{option.category}}</option>
+      </datalist>
+
       <div class="form-group">
-        <label class="control-label col-sm-3" for>Sub category:</label>
-        <input type="text" v-model="item.sub_category" />
+        <label class="control-label col-sm-4" for>Sub category:</label>
+        <input list="sub_cat" v-model="item.sub_category" />
       </div>
+      <datalist id="sub_cat">
+          <option v-for="option in item_options" :key="option.option_id">{{option.sub_category}}</option>
+      </datalist>
+
       <div class="form-group">
-        <label class="control-label col-sm-3" for>Price:</label>
+        <label class="control-label col-sm-4" for>Price:</label>
         <input type="text" v-model="item.price" />
       </div>
       <div class="form-group">
-        <label class="control-label col-sm-3" for>Quantity:</label>
+        <label class="control-label col-sm-4" for>Quantity:</label>
         <input type="text" v-model="item.qty" />
       </div>
       <div class="form-group">
-        <label class="control-label col-sm-3" for>Comment:</label>
+        <label class="control-label col-sm-4" for>Comment:</label>
         <input type="text" v-model="item.comment" />
       </div>
       <div class="form-group">
-        <label class="control-label col-sm-3" for>Bin location:</label>
+        <label class="control-label col-sm-4" for>Bin location:</label>
         <input type="text" v-model="item.bin_location" />
       </div>
     </form>
+    </div>
 
-    <form class="form-horizontal" style="width:50%; margin:auto;">
+    <div class="col-md-6 float-right">
+    <form class="form-horizontal" > <!---style="width:50%; margin:auto;"--->
       <div class="form-group">
-        <label class="control-label col-sm-3" for>Supplier:</label>
-        <input type="text" v-model="item.vendor" />
+        <label class="control-label col-sm-4" for>Supplier:</label>
+        <input list="supplier" v-model="item.vendor" />
       </div>
+
+      <datalist id="supplier">
+          <option v-for="option in item_options" :key="option.option_id">{{option.suppliers}}</option>
+      </datalist>
+
       <div class="form-group">
-        <label class="control-label col-sm-3" for>Supplier Part No:</label>
+        <label class="control-label col-sm-4" for>Supplier Part No:</label>
         <input type="text" v-model="item.vendor_item_number" />
       </div>
       <div class="form-group">
-        <label class="control-label col-sm-3" for>Lead-time:</label>
+        <label class="control-label col-sm-4" for>Lead-time:</label>
         <input type="text" v-model="item.lead_time" />
       </div>
       <div class="form-group">
-        <label class="control-label col-sm-3" for>MFG Name:</label>
-        <input type="text" v-model="item.mfg_name" />
+        <label class="control-label col-sm-4" for>MFG Name:</label>
+        <input list="mfg_name" v-model="item.mfg_name" />
       </div>
+
+      <datalist id="mfg_name">
+          <option v-for="option in item_options" :key="option.option_id">{{option.mfg_name}}</option>
+      </datalist>
+ 
       <div class="form-group">
-        <label class="control-label col-sm-3" for>MFG Part Number:</label>
+        <label class="control-label col-sm-4" for>MFG Part Number:</label>
         <input type="text" v-model="item.mfg_partnumber" />
       </div>
       <div class="form-group">
-        <label class="control-label col-sm-3" for>Mounting type:</label>
-        <input type="text" v-model="item.mounting_type" />
+        <label class="control-label col-sm-4" for>Mounting type:</label>
+        <input list="mounting-type" v-model="item.mounting_type" />
       </div>
+      <datalist id="mounting-type">
+          <option v-for="option in item_options" :key="option.option_id">{{option.mounting_type}}</option>
+      </datalist>
+
       <div class="form-group">
-        <label class="control-label col-sm-3" for>Package:</label>
-        <input type="text" v-model="item.package" />
+        <label class="control-label col-sm-4" for>Package:</label>
+        <input list="package" v-model="item.package" />
       </div>
-      <div class="form-group">
-        <label class="control-label col-sm-3" for>Footprint Ref:</label>
+      <datalist id="package">
+          <option v-for="option in item_options" :key="option.option_id">{{option.package}}</option>
+      </datalist>
+
+      <!--div class="form-group">
+        <label class="control-label col-sm-4" for>Footprint Ref:</label>
         <input type="text" v-model="item.footprint_ref" />
       </div>
       <div class="form-group">
-        <label class="control-label col-sm-3" for>Library Ref:</label>
+        <label class="control-label col-sm-4" for>Library Ref:</label>
         <input type="text" v-model="item.library_ref" />
-      </div>
+      </div-->
     </form>
-    </div>
+    
+    </div> <!-- END OF RIGHT FLOAT -->
+
+    </div> <!-- END OF IF SUBMITTED -->
+
     <button v-on:click="addItem">Submit</button>
     <div v-if="submitted">
       <h3>Component succeffuly added</h3>
       <nuxt-link to='/components'><button>Go Back To Items List</button></nuxt-link>
     </div>
+   
   </div>
 </template>
 
@@ -88,10 +123,10 @@
 //`import axios from "axios";
 
 export default {
-  
+  middleware: ['auth'],
   data: function() {
     return {
-      //items: [],
+      item_options: [],
       item: {
         id: 0,
         part_number: null,
@@ -122,6 +157,9 @@ export default {
         .$post("/fig_items", this.item)
         this.submitted = true;
     }
+  },
+  created: async function() {
+    this.item_options = await this.$axios.$get("/item_options")
   }
 }
 
@@ -149,14 +187,16 @@ h3 {
   display: inline;
 }
 
-.form-horizontal input {
+.form-horizontal input[type=text][type=list] {
   padding: 1px;
+  margin-left: 20px;
   width: 45%;
 }
 
 button {
-  margin-left: 40%;
-  width: 10%
+  margin-left: 0%;
+  margin-top: 50px;
+  width: 10%;
 }
 
 button:hover {

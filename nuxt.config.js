@@ -9,13 +9,17 @@ export default {
   ** Nuxt target
   ** See https://nuxtjs.org/api/configuration-target
   */
-  target: 'server',
+  target: 'static',
   /*
   ** Headers of the page
   ** See https://nuxtjs.org/api/configuration-head
   */
+ server: {
+  port: 35000
+ },
+
  env: {
-  baseUrl: process.env.BASE_URL || 'http://localhost:3000'
+  baseUrl: process.env.BASE_URL || 'http://localhost:35000'
   },
 
   head: {
@@ -38,7 +42,7 @@ export default {
   ** Plugins to load before mounting the App
   ** https://nuxtjs.org/guide/plugins
   */
-  plugins: [{ src: "~plugins/vue-tables-2.js", ssr: false }],
+  plugins: [{ src: "~plugins/vue-tables-2.js", ssr: false },{ src: "~plugins/vue-context.js", ssr: false }, { src: "~plugins/vue-clickaway.js", ssr: false }],
   /*
   ** Auto import components
   ** See https://nuxtjs.org/api/configuration-components
@@ -64,10 +68,10 @@ export default {
     strategies: {
       local: {
         endpoints: {
-          login: { url: '/auth/login', method: 'post', propertyName: false },
-          logout: { url: '/login' },
+          login: { url: '/auth/login', method: 'post', propertyName: true },
+          logout: { url: '/' },
           user: { url: '/auth/user', method: 'get', propertyName: 'user' },
-          home: 'boms'
+          //home: 'boms'
         },
         tokenRequired: false,
         // tokenType: 'bearer',
@@ -79,7 +83,7 @@ export default {
 
   axios: {
     
-    baseURL: process.env.BASE_URL || 'http://localhost:1234', // Used as fallback if no runtime config is provided
+    baseURL: (process.env.NODE_ENV === 'development') ?  'http://localhost:35001'  : 'https://jobs.gofig.co.za:35001', // Used as fallback if no runtime config is provided
   },
   
  
@@ -90,7 +94,8 @@ export default {
   ** See https://nuxtjs.org/api/configuration-build/
   */
   build: {
-    vendor: ['vue-tables-2']
+    vendor: ['vue-tables-2'],
+    transpile: ["vee-validate/dist/rules","vue-context","vue-clickaway"],
   }
 }
 

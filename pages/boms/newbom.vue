@@ -114,6 +114,7 @@
 import BomForm from "@/components/bom/BomForm";
 
 export default {
+    middleware: ['auth'],
     components:{
         BomForm
     },
