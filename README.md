@@ -1,8 +1,8 @@
-## Inventory and Job Management System
+# Inventory and Job Management System
 
 A comprehensive **Inventory and Job Management System** using **Vue.js**, **Node.js**, and **MySQL**, designed to streamline component tracking, job kitting, and procurement processes. The system supports **bulk importing of component data** from existing Excel records, storing details such as **quantity, price, and supplier information** in a structured MySQL database.
 
-#### Key Features
+## Key Features
 
 - **Real-time search with auto-suggestions** on the front end for quick component lookup.
 - **BOM (Bill of Materials) uploads**, which dynamically deduct components from stock when assigned to jobs.
